@@ -4,7 +4,7 @@
    ============================================ */
 
 // ============ API CONFIGURATION ============
-const apiKey = "AIzaSyB6RCPftksiPB1ZHTpW6KY9ofKJzwaiPwU";
+const apiKey = "";
 const modelName = "gemini-2.0-flash";
 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
 
