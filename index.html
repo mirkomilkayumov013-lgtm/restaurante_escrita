@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDI A2 Spanish Writing Checker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1 class="logo">CDI A2 <span class="logo-accent">Escritura</span></h1>
+                <span class="badge">DELE A2 Practice</span>
+            </div>
+            <div class="header-right">
+                <div class="timer-container">
+                    <span class="timer-icon">&#9201;</span>
+                    <span id="timer">45:00</span>
+                </div>
+                <button id="dark-mode-toggle" class="icon-btn" aria-label="Toggle dark mode">
+                    <span class="moon-icon">&#9790;</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Task Card -->
+            <section class="task-card">
+                <div class="task-header">
+                    <h2>Tarea de Escritura</h2>
+                    <span class="task-level">Nivel A2</span>
+                </div>
+                <div class="task-body">
+                    <p class="task-instruction">Usted tiene que escribir un texto sobre un restaurante en el que estuvo. Hable de:</p>
+                    <ul class="task-list">
+                        <li>Como era, donde estaba, que tipo de comida servian.</li>
+                        <li>Quien se lo recomendo.</li>
+                        <li>Con quien fue.</li>
+                        <li>Que comio.</li>
+                        <li>Le gusto o no le gusto. Por que.</li>
+                    </ul>
+                    <p class="task-note">Minimum 80 words required. Write between 80-120 words.</p>
+                </div>
+            </section>
+
+            <!-- Writing Area -->
+            <section class="writing-section">
+                <div class="writing-header">
+                    <h3>Your Essay</h3>
+                    <div class="word-counter-container">
+                        <span id="word-count" class="word-count">0</span>
+                        <span class="word-label">/ 80 words min</span>
+                    </div>
+                </div>
+                <textarea id="essay-input" class="essay-textarea" placeholder="Start writing your essay here..." rows="12"></textarea>
+                <div class="writing-actions">
+                    <button id="reset-btn" class="btn btn-secondary">Reset</button>
+                    <button id="check-btn" class="btn btn-primary" disabled>Check Essay</button>
+                </div>
+                <p id="autosave-status" class="autosave-status">Autosave: Ready</p>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results-section" class="results-section hidden">
+                <div class="results-header">
+                    <h2>Correction Results</h2>
+                    <button id="print-btn" class="btn btn-outline">Print Results</button>
+                </div>
+
+                <!-- Score Cards -->
+                <div class="score-grid">
+                    <div class="score-card score-total">
+                        <span class="score-value" id="score-total">0</span>
+                        <span class="score-label">Total / 10</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="score-value" id="score-grammar">0</span>
+                        <span class="score-label">Grammar / 3</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="score-value" id="score-vocabulary">0</span>
+                        <span class="score-label">Vocabulary / 2</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="score-value" id="score-task">0</span>
+                        <span class="score-label">Task / 3</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="score-value" id="score-organization">0</span>
+                        <span class="score-label">Organization / 1</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="score-value" id="score-orthography">0</span>
+                        <span class="score-label">Orthography / 1</span>
+                    </div>
+                </div>
+
+                <!-- Original with Marks -->
+                <div class="result-card">
+                    <h3>Your Text (with corrections marked)</h3>
+                    <div id="marked-text" class="marked-text"></div>
+                </div>
+
+                <!-- Corrected Version -->
+                <div class="result-card">
+                    <h3>Corrected Version</h3>
+                    <div id="corrected-text" class="corrected-text"></div>
+                </div>
+
+                <!-- Corrections Summary -->
+                <div class="result-card">
+                    <h3>Corrections Summary</h3>
+                    <div id="corrections-list" class="corrections-list"></div>
+                </div>
+
+                <!-- Task Completion -->
+                <div class="result-card">
+                    <h3>Task Requirements Check</h3>
+                    <div id="task-checklist" class="task-checklist"></div>
+                </div>
+
+                <!-- Strengths & Weaknesses -->
+                <div class="feedback-grid">
+                    <div class="result-card feedback-card">
+                        <h3>Strengths</h3>
+                        <ul id="strengths-list" class="feedback-list strengths"></ul>
+                    </div>
+                    <div class="result-card feedback-card">
+                        <h3>Areas to Improve</h3>
+                        <ul id="weaknesses-list" class="feedback-list weaknesses"></ul>
+                    </div>
+                </div>
+
+                <!-- CEFR Feedback -->
+                <div class="result-card">
+                    <h3>CEFR A2 Feedback</h3>
+                    <p id="cefr-feedback" class="cefr-feedback"></p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Analyzing your essay...</p>
+                <p class="loading-sub">This may take a few seconds</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>CDI A2 Spanish Writing Practice &mdash; Powered by AI</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
